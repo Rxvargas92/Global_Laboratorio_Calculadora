@@ -52,140 +52,168 @@
             // 
             // btn_9
             // 
-            this.btn_9.Location = new System.Drawing.Point(144, 98);
+            this.btn_9.Location = new System.Drawing.Point(192, 121);
+            this.btn_9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_9.Name = "btn_9";
-            this.btn_9.Size = new System.Drawing.Size(60, 55);
+            this.btn_9.Size = new System.Drawing.Size(80, 68);
             this.btn_9.TabIndex = 2;
+            this.btn_9.TabStop = false;
             this.btn_9.Text = "9";
             this.btn_9.UseVisualStyleBackColor = true;
             this.btn_9.Click += new System.EventHandler(this.btn_9_Click);
             // 
             // btn_4
             // 
-            this.btn_4.Location = new System.Drawing.Point(12, 159);
+            this.btn_4.Location = new System.Drawing.Point(16, 196);
+            this.btn_4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_4.Name = "btn_4";
-            this.btn_4.Size = new System.Drawing.Size(60, 55);
+            this.btn_4.Size = new System.Drawing.Size(80, 68);
             this.btn_4.TabIndex = 3;
+            this.btn_4.TabStop = false;
             this.btn_4.Text = "4";
             this.btn_4.UseVisualStyleBackColor = true;
             this.btn_4.Click += new System.EventHandler(this.btn_4_Click);
             // 
             // btn_5
             // 
-            this.btn_5.Location = new System.Drawing.Point(78, 159);
+            this.btn_5.Location = new System.Drawing.Point(104, 196);
+            this.btn_5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_5.Name = "btn_5";
-            this.btn_5.Size = new System.Drawing.Size(60, 55);
+            this.btn_5.Size = new System.Drawing.Size(80, 68);
             this.btn_5.TabIndex = 4;
+            this.btn_5.TabStop = false;
             this.btn_5.Text = "5";
             this.btn_5.UseVisualStyleBackColor = true;
             this.btn_5.Click += new System.EventHandler(this.btn_5_Click);
             // 
             // btn_6
             // 
-            this.btn_6.Location = new System.Drawing.Point(144, 159);
+            this.btn_6.Location = new System.Drawing.Point(192, 196);
+            this.btn_6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_6.Name = "btn_6";
-            this.btn_6.Size = new System.Drawing.Size(60, 55);
+            this.btn_6.Size = new System.Drawing.Size(80, 68);
             this.btn_6.TabIndex = 5;
+            this.btn_6.TabStop = false;
             this.btn_6.Text = "6";
             this.btn_6.UseVisualStyleBackColor = true;
             this.btn_6.Click += new System.EventHandler(this.btn_6_Click);
             // 
             // btn_2
             // 
-            this.btn_2.Location = new System.Drawing.Point(78, 220);
+            this.btn_2.Location = new System.Drawing.Point(104, 271);
+            this.btn_2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_2.Name = "btn_2";
-            this.btn_2.Size = new System.Drawing.Size(60, 55);
+            this.btn_2.Size = new System.Drawing.Size(80, 68);
             this.btn_2.TabIndex = 7;
+            this.btn_2.TabStop = false;
             this.btn_2.Text = "2";
             this.btn_2.UseVisualStyleBackColor = true;
             this.btn_2.Click += new System.EventHandler(this.btn_2_Click);
             // 
             // btn_3
             // 
-            this.btn_3.Location = new System.Drawing.Point(144, 220);
+            this.btn_3.Location = new System.Drawing.Point(192, 271);
+            this.btn_3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_3.Name = "btn_3";
-            this.btn_3.Size = new System.Drawing.Size(60, 55);
+            this.btn_3.Size = new System.Drawing.Size(80, 68);
             this.btn_3.TabIndex = 8;
+            this.btn_3.TabStop = false;
             this.btn_3.Text = "3";
             this.btn_3.UseVisualStyleBackColor = true;
             this.btn_3.Click += new System.EventHandler(this.btn_3_Click);
             // 
             // btn_parentheses
             // 
-            this.btn_parentheses.Location = new System.Drawing.Point(12, 281);
+            this.btn_parentheses.Location = new System.Drawing.Point(16, 346);
+            this.btn_parentheses.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_parentheses.Name = "btn_parentheses";
-            this.btn_parentheses.Size = new System.Drawing.Size(60, 55);
+            this.btn_parentheses.Size = new System.Drawing.Size(80, 68);
             this.btn_parentheses.TabIndex = 9;
+            this.btn_parentheses.TabStop = false;
             this.btn_parentheses.Text = "(  )";
             this.btn_parentheses.UseVisualStyleBackColor = true;
             this.btn_parentheses.Click += new System.EventHandler(this.btn_parentheses_Click);
             // 
             // btn_0
             // 
-            this.btn_0.Location = new System.Drawing.Point(78, 281);
+            this.btn_0.Location = new System.Drawing.Point(104, 346);
+            this.btn_0.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_0.Name = "btn_0";
-            this.btn_0.Size = new System.Drawing.Size(60, 55);
+            this.btn_0.Size = new System.Drawing.Size(80, 68);
             this.btn_0.TabIndex = 10;
+            this.btn_0.TabStop = false;
             this.btn_0.Text = "0";
             this.btn_0.UseVisualStyleBackColor = true;
             this.btn_0.Click += new System.EventHandler(this.btn_0_Click);
             // 
             // btn_equals
             // 
-            this.btn_equals.Location = new System.Drawing.Point(144, 281);
+            this.btn_equals.Location = new System.Drawing.Point(192, 346);
+            this.btn_equals.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_equals.Name = "btn_equals";
-            this.btn_equals.Size = new System.Drawing.Size(60, 55);
+            this.btn_equals.Size = new System.Drawing.Size(80, 68);
             this.btn_equals.TabIndex = 11;
+            this.btn_equals.TabStop = false;
             this.btn_equals.Text = "=";
             this.btn_equals.UseVisualStyleBackColor = true;
             this.btn_equals.Click += new System.EventHandler(this.btn_equals_Click);
             // 
             // btn_division
             // 
-            this.btn_division.Location = new System.Drawing.Point(210, 98);
+            this.btn_division.Location = new System.Drawing.Point(280, 121);
+            this.btn_division.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_division.Name = "btn_division";
-            this.btn_division.Size = new System.Drawing.Size(60, 55);
+            this.btn_division.Size = new System.Drawing.Size(80, 68);
             this.btn_division.TabIndex = 12;
+            this.btn_division.TabStop = false;
             this.btn_division.Text = "/";
             this.btn_division.UseVisualStyleBackColor = true;
             this.btn_division.Click += new System.EventHandler(this.btn_division_Click);
             // 
             // btn_multi
             // 
-            this.btn_multi.Location = new System.Drawing.Point(210, 159);
+            this.btn_multi.Location = new System.Drawing.Point(280, 196);
+            this.btn_multi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_multi.Name = "btn_multi";
-            this.btn_multi.Size = new System.Drawing.Size(60, 55);
+            this.btn_multi.Size = new System.Drawing.Size(80, 68);
             this.btn_multi.TabIndex = 13;
+            this.btn_multi.TabStop = false;
             this.btn_multi.Text = "*";
             this.btn_multi.UseVisualStyleBackColor = true;
             this.btn_multi.Click += new System.EventHandler(this.btn_multi_Click);
             // 
             // btn_less
             // 
-            this.btn_less.Location = new System.Drawing.Point(210, 220);
+            this.btn_less.Location = new System.Drawing.Point(280, 271);
+            this.btn_less.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_less.Name = "btn_less";
-            this.btn_less.Size = new System.Drawing.Size(60, 55);
+            this.btn_less.Size = new System.Drawing.Size(80, 68);
             this.btn_less.TabIndex = 14;
+            this.btn_less.TabStop = false;
             this.btn_less.Text = "-";
             this.btn_less.UseVisualStyleBackColor = true;
             this.btn_less.Click += new System.EventHandler(this.btn_less_Click);
             // 
             // btn_plus
             // 
-            this.btn_plus.Location = new System.Drawing.Point(210, 281);
+            this.btn_plus.Location = new System.Drawing.Point(280, 346);
+            this.btn_plus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_plus.Name = "btn_plus";
-            this.btn_plus.Size = new System.Drawing.Size(60, 55);
+            this.btn_plus.Size = new System.Drawing.Size(80, 68);
             this.btn_plus.TabIndex = 15;
+            this.btn_plus.TabStop = false;
             this.btn_plus.Text = "+";
             this.btn_plus.UseVisualStyleBackColor = true;
             this.btn_plus.Click += new System.EventHandler(this.btn_plus_Click);
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(12, 69);
+            this.btn_clear.Location = new System.Drawing.Point(16, 85);
+            this.btn_clear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(126, 23);
+            this.btn_clear.Size = new System.Drawing.Size(168, 28);
             this.btn_clear.TabIndex = 16;
+            this.btn_clear.TabStop = false;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
@@ -195,61 +223,70 @@
             this.tBox_front.Enabled = false;
             this.tBox_front.Font = new System.Drawing.Font("Arial Rounded MT Bold", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tBox_front.HideSelection = false;
-            this.tBox_front.Location = new System.Drawing.Point(12, 12);
+            this.tBox_front.Location = new System.Drawing.Point(16, 15);
+            this.tBox_front.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tBox_front.Multiline = true;
             this.tBox_front.Name = "tBox_front";
             this.tBox_front.ReadOnly = true;
             this.tBox_front.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tBox_front.Size = new System.Drawing.Size(258, 48);
+            this.tBox_front.Size = new System.Drawing.Size(343, 58);
             this.tBox_front.TabIndex = 18;
             this.tBox_front.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tBox_front.TextChanged += new System.EventHandler(this.tBox_front_TextChanged);
             // 
             // btn_back
             // 
-            this.btn_back.Location = new System.Drawing.Point(145, 69);
+            this.btn_back.Location = new System.Drawing.Point(193, 85);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(125, 23);
+            this.btn_back.Size = new System.Drawing.Size(167, 28);
             this.btn_back.TabIndex = 19;
+            this.btn_back.TabStop = false;
             this.btn_back.Text = "<-";
             this.btn_back.UseVisualStyleBackColor = true;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
             // btn_8
             // 
-            this.btn_8.Location = new System.Drawing.Point(78, 98);
+            this.btn_8.Location = new System.Drawing.Point(104, 121);
+            this.btn_8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_8.Name = "btn_8";
-            this.btn_8.Size = new System.Drawing.Size(60, 55);
+            this.btn_8.Size = new System.Drawing.Size(80, 68);
             this.btn_8.TabIndex = 20;
+            this.btn_8.TabStop = false;
             this.btn_8.Text = "8";
             this.btn_8.UseVisualStyleBackColor = true;
             this.btn_8.Click += new System.EventHandler(this.btn_8_Click);
             // 
             // btn_7
             // 
-            this.btn_7.Location = new System.Drawing.Point(12, 98);
+            this.btn_7.Location = new System.Drawing.Point(16, 121);
+            this.btn_7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_7.Name = "btn_7";
-            this.btn_7.Size = new System.Drawing.Size(60, 55);
+            this.btn_7.Size = new System.Drawing.Size(80, 68);
             this.btn_7.TabIndex = 21;
+            this.btn_7.TabStop = false;
             this.btn_7.Text = "7";
             this.btn_7.UseVisualStyleBackColor = true;
             this.btn_7.Click += new System.EventHandler(this.btn_7_Click);
             // 
             // btn_1
             // 
-            this.btn_1.Location = new System.Drawing.Point(12, 220);
+            this.btn_1.Location = new System.Drawing.Point(16, 271);
+            this.btn_1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_1.Name = "btn_1";
-            this.btn_1.Size = new System.Drawing.Size(60, 55);
+            this.btn_1.Size = new System.Drawing.Size(80, 68);
             this.btn_1.TabIndex = 22;
+            this.btn_1.TabStop = false;
             this.btn_1.Text = "1";
             this.btn_1.UseVisualStyleBackColor = true;
             this.btn_1.Click += new System.EventHandler(this.btn_1_Click);
             // 
             // Calculator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(279, 351);
+            this.ClientSize = new System.Drawing.Size(369, 422);
             this.Controls.Add(this.btn_1);
             this.Controls.Add(this.btn_7);
             this.Controls.Add(this.btn_8);
@@ -270,10 +307,11 @@
             this.Controls.Add(this.btn_4);
             this.Controls.Add(this.btn_9);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(295, 390);
+            this.MaximumSize = new System.Drawing.Size(387, 469);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(295, 390);
+            this.MinimumSize = new System.Drawing.Size(387, 469);
             this.Name = "Calculator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculator";
