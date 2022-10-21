@@ -96,7 +96,7 @@ namespace WindowsFormsApp1
             {
                 tBox_front.Text = text.Substring(0, text.Length - 1);
             }
-            
+
         }
 
         private void btn_plus_Click(object sender, EventArgs e)
@@ -143,11 +143,11 @@ namespace WindowsFormsApp1
 
             }
             else
-            { 
-                 tBox_front.Text = text + "-";
+            {
+                tBox_front.Text = text + "-";
             }
 
-            
+
         }
 
         private void btn_multi_Click(object sender, EventArgs e)
@@ -167,13 +167,13 @@ namespace WindowsFormsApp1
                 {
                     tBox_front.Text = text.Substring(0, text.Length - 1) + "*";
                 }
-                else if(Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[-]+$"))
+                else if (Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[-]+$"))
                 {
                     tBox_front.Text = text.Substring(0, text.Length - 1);
                 }
             }
-            
-            
+
+
         }
 
         private void btn_division_Click(object sender, EventArgs e)
@@ -209,10 +209,10 @@ namespace WindowsFormsApp1
             {
                 tBox_front.Text = "(";
             }
-            else if(Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[0-9]+$"))
+            else if (Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[0-9]+$"))
             {
                 tBox_front.Text = text + ")";
-            } 
+            }
             else if (Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[*+\-/]+$"))
             {
                 tBox_front.Text = text + "(";
@@ -231,24 +231,29 @@ namespace WindowsFormsApp1
 
         private void btn_equals_Click(object sender, EventArgs e)
         {
-            String text = tBox_front.Text;
-            Array<String> numeros;
-            for(int i=0; i<text.Length; i++)
-            {
-                if (text.Contains("+"))
-                {
-                    
-                    
-                    tBox_front.Text = text.Substring(0, i - 1);
-                    //String number1 = text.Substring(0, i-1);
-                    //int num1 = Convert.ToInt32(number1);
-                    //String number2 = text.Substring(i+1, text.Length);
-                    //int num2 = Convert.ToInt32(number2);
-                    //tBox_front.Text = Convert.ToString(num1+ number2);
-                }
-            }
-            
+            String text = tBox_front.Text; //(14+8)
+            text = delete_pharenteses(text);
+            string solve = "";
+            int num1;
+            int num2;
 
+            num1 = Convert.ToInt32(text.Substring(0, find_operator(text)));
+            num2 = Convert.ToInt32(text.Substring(find_operator(text)));
+
+            solve = Convert.ToString(num1 + num2);
+
+            tBox_front.Text = solve;
         }
+
+        public string delete_pharenteses(string text)
+        {
+            return text.Substring(1, text.Length - 2);
+        }
+
+        public int find_operator(string text)
+        {
+            return text.IndexOf('+');
+        }
+
     }
 }
