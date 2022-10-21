@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -237,7 +238,7 @@ namespace WindowsFormsApp1
 
             //text = add_pharenteses(text);
 
-            tBox_front.Text = add_pharenteses(text);
+            tBox_front.Text = solve(text);
 
             //text = delete_pharenteses(text);
 
@@ -249,11 +250,35 @@ namespace WindowsFormsApp1
         {
             int num1;
             int num2;
+            string operador = char_operator(text);
+            int index = index_operator(text);
 
-            num1 = Convert.ToInt32(text.Substring(0, find_operator(text)));
-            num2 = Convert.ToInt32(text.Substring(find_operator(text)));
+            num1 = Convert.ToInt32(text.Substring(0, index));
+            num2 = Convert.ToInt32(text.Substring(index));
 
-            text = Convert.ToString(num1 + num2);
+
+            if (operador.Contains("+"))
+            {
+                text = Convert.ToString(num1 + num2);
+            }
+            else if (operador.Contains("-"))
+            {
+                text = Convert.ToString(num1 - num2);
+            }
+            else if (operador.Contains("*"))
+            {
+                text = Convert.ToString(num1 * num2);
+            }
+            else if (operador.Contains("/"))
+            {
+                if (num2 < 1)
+                {
+                    text = "Sintax Error";
+                }
+                text = Convert.ToString(num1 / num2);
+            }
+
+            
 
             return text;
         }
@@ -265,24 +290,40 @@ namespace WindowsFormsApp1
         }
 
         // retorna el index del operador que este dentro del @string ( hecho solo con + ) 
-        public int find_operator(string text)
+        public int index_operator(string text)
         {
-            return text.IndexOf('+');
+            string[] list = { "*", "/", "+", "-" };
+            int index = 0;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (index > 0)
+                { break; }
+                index = text.IndexOf(list[i]);
+            }
+
+            return index;
+        }
+
+        public string char_operator(string text)
+        {
+            int index = index_operator(text);
+            return text.Substring(index, index+1);
         }
 
 
         // agrega parentesis al principio y al final del @string que se mande
         public string add_pharenteses(string text)
         {
-            if (!text.Substring(0, 1).Equals("(") && !text.Substring(text.Length - 1).Equals(")"))
+            if (!text.StartsWith("(") && !text.EndsWith(")"))
             {
                 text = text.Insert(0, "(").Insert(text.Length + 1, ")");
             }
-            else if (!text.Substring(0, 1).Equals("("))
+            else if (!text.StartsWith("("))
             {
                 text = text.Insert(0, "(");
             }
-            else if (!text.Substring(text.Length - 1).Equals(")"))
+            else if (!text.EndsWith(")"))
             {
                 text = text.Insert(text.Length, ")");
             }
