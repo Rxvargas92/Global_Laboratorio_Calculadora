@@ -235,13 +235,16 @@ namespace WindowsFormsApp1
 
             String text = tBox_front.Text; //(14+8) or (1444444+81423423)
 
-            text = add_pharenteses(text);
+            //text = add_pharenteses(text);
 
-            text = delete_pharenteses(text);
+            tBox_front.Text = add_pharenteses(text);
 
-            tBox_front.Text = solve(text);
-         }
+            //text = delete_pharenteses(text);
 
+            //tBox_front.Text = solve(text);
+        }
+
+        // resuleve una ecuacion simple de suma de dos numeros ( 14+8 | 1444444+81423423 )
         public string solve(string text)
         {
             int num1;
@@ -255,19 +258,35 @@ namespace WindowsFormsApp1
             return text;
         }
 
+        // elimina parentesis al principio y al final del @string que se mande
         public string delete_pharenteses(string text)
         {
             return text.Substring(1, text.Length - 2);
         }
 
+        // retorna el index del operador que este dentro del @string ( hecho solo con + ) 
         public int find_operator(string text)
         {
             return text.IndexOf('+');
         }
 
+
+        // agrega parentesis al principio y al final del @string que se mande
         public string add_pharenteses(string text)
         {
-            return text.Insert(0, "(").Insert(text.Length + 1, ")");
+            if (!text.Substring(0, 1).Equals("(") && !text.Substring(text.Length - 1).Equals(")"))
+            {
+                text = text.Insert(0, "(").Insert(text.Length + 1, ")");
+            }
+            else if (!text.Substring(0, 1).Equals("("))
+            {
+                text = text.Insert(0, "(");
+            }
+            else if (!text.Substring(text.Length - 1).Equals(")"))
+            {
+                text = text.Insert(text.Length, ")");
+            }
+            return text;
         }
     }
 }
