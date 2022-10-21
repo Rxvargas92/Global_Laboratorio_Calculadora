@@ -231,18 +231,28 @@ namespace WindowsFormsApp1
 
         private void btn_equals_Click(object sender, EventArgs e)
         {
-            String text = tBox_front.Text; //(14+8)
+            //   goal --> 23 + (4 * (-9 * (40 + 2334))) / 8
+
+            String text = tBox_front.Text; //(14+8) or (1444444+81423423)
+
+            text = add_pharenteses(text);
+
             text = delete_pharenteses(text);
-            string solve = "";
+
+            tBox_front.Text = solve(text);
+         }
+
+        public string solve(string text)
+        {
             int num1;
             int num2;
 
             num1 = Convert.ToInt32(text.Substring(0, find_operator(text)));
             num2 = Convert.ToInt32(text.Substring(find_operator(text)));
 
-            solve = Convert.ToString(num1 + num2);
+            text = Convert.ToString(num1 + num2);
 
-            tBox_front.Text = solve;
+            return text;
         }
 
         public string delete_pharenteses(string text)
@@ -255,5 +265,9 @@ namespace WindowsFormsApp1
             return text.IndexOf('+');
         }
 
+        public string add_pharenteses(string text)
+        {
+            return text.Insert(0, "(").Insert(text.Length + 1, ")");
+        }
     }
 }
