@@ -24,60 +24,92 @@ namespace WindowsFormsApp1
         private void btn_1_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if(text.Equals("Sintax Error"))
+                text = "";
+
+               
+
             tBox_front.Text = text + "1";
         }
 
         private void btn_2_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "2";
         }
 
         private void btn_3_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "3";
         }
 
         private void btn_4_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "4";
         }
 
         private void btn_5_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "5";
         }
 
         private void btn_6_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "6";
         }
 
         private void btn_7_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "7";
         }
 
         private void btn_8_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "8";
         }
 
         private void btn_9_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "9";
         }
 
         private void btn_0_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             tBox_front.Text = text + "0";
         }
 
@@ -89,6 +121,9 @@ namespace WindowsFormsApp1
         private void btn_back_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
+
             if (text.Length == 0)
             {
                 tBox_front.Text = "";
@@ -103,6 +138,7 @@ namespace WindowsFormsApp1
         private void btn_plus_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+
             do
             {
                 if (text.Length == 0)
@@ -129,6 +165,9 @@ namespace WindowsFormsApp1
         private void btn_less_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                tBox_front.Text = "";
+
             if (text.Length == 0)
             {
                 tBox_front.Text = "-";
@@ -154,6 +193,9 @@ namespace WindowsFormsApp1
         private void btn_multi_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                tBox_front.Text = "";
+
             if (text.Length == 0)
             {
                 tBox_front.Text = "";
@@ -180,6 +222,9 @@ namespace WindowsFormsApp1
         private void btn_division_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                tBox_front.Text = "";
+
             if (text.Length == 0)
             {
                 tBox_front.Text = "";
@@ -206,6 +251,9 @@ namespace WindowsFormsApp1
         {
 
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                tBox_front.Text = "";
+
             if (text.Length == 0)
             {
                 tBox_front.Text = "(";
@@ -227,7 +275,9 @@ namespace WindowsFormsApp1
 
         private void tBox_front_TextChanged(object sender, EventArgs e)
         {
-
+            String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
         }
 
         private void btn_equals_Click(object sender, EventArgs e)
@@ -235,6 +285,9 @@ namespace WindowsFormsApp1
             //   goal --> 23 + (4 * (-9 * (40 + 2334))) / 8
 
             String text = tBox_front.Text; //(14+8) or (1444444+81423423)
+            if (text.Equals("Sintax Error"))
+                tBox_front.Text = "";
+
 
             //text = add_pharenteses(text);
 
@@ -248,35 +301,41 @@ namespace WindowsFormsApp1
         // resuleve una ecuacion simple de suma de dos numeros ( 14+8 | 1444444+81423423 )
         public string solve(string text)
         {
+            text = add_pharenteses(text);
+            text = delete_pharenteses(text);
             int num1;
             int num2;
             string operador = char_operator(text);
             int index = index_operator(text);
 
             num1 = Convert.ToInt32(text.Substring(0, index));
-            num2 = Convert.ToInt32(text.Substring(index));
+            num2 = Convert.ToInt32(text.Substring(index + 1));
 
 
-            if (operador.Contains("+"))
+            do
             {
-                text = Convert.ToString(num1 + num2);
-            }
-            else if (operador.Contains("-"))
-            {
-                text = Convert.ToString(num1 - num2);
-            }
-            else if (operador.Contains("*"))
-            {
-                text = Convert.ToString(num1 * num2);
-            }
-            else if (operador.Contains("/"))
-            {
-                if (num2 < 1)
+                if (operador.Contains("+"))
                 {
-                    text = "Sintax Error";
+                    text = Convert.ToString(num1 + num2);
                 }
-                text = Convert.ToString(num1 / num2);
-            }
+                else if (operador.Contains("-"))
+                {
+                    text = Convert.ToString(num1 - num2);
+                }
+                else if (operador.Contains("*"))
+                {
+                    text = Convert.ToString(num1 * num2);
+                }
+                else if (operador.Contains("/"))
+                {
+                    if (num2 < 1)
+                    {
+                        text = "Sintax Error";
+                        break;
+                    }
+                    text = Convert.ToString(num1 / num2);
+                }
+            } while (false);
 
             
 
@@ -286,7 +345,12 @@ namespace WindowsFormsApp1
         // elimina parentesis al principio y al final del @string que se mande
         public string delete_pharenteses(string text)
         {
-            return text.Substring(1, text.Length - 2);
+            if (text.StartsWith("(") && text.EndsWith(")"))
+            {
+                return text.Substring(1, text.Length - 2);
+            }
+
+            return text;
         }
 
         // retorna el index del operador que este dentro del @string ( hecho solo con + ) 
@@ -308,7 +372,7 @@ namespace WindowsFormsApp1
         public string char_operator(string text)
         {
             int index = index_operator(text);
-            return text.Substring(index, index+1);
+            return text.Substring(index, 1);
         }
 
 
