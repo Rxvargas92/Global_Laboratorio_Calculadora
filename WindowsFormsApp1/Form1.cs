@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,10 +25,10 @@ namespace WindowsFormsApp1
         private void btn_1_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
-            if(text.Equals("Sintax Error"))
+            if (text.Equals("Sintax Error"))
                 text = "";
 
-               
+
 
             tBox_front.Text = text + "1";
         }
@@ -138,6 +139,8 @@ namespace WindowsFormsApp1
         private void btn_plus_Click(object sender, EventArgs e)
         {
             String text = tBox_front.Text;
+            if (text.Equals("Sintax Error"))
+                text = "";
 
             do
             {
@@ -275,27 +278,41 @@ namespace WindowsFormsApp1
 
         private void tBox_front_TextChanged(object sender, EventArgs e)
         {
-            String text = tBox_front.Text;
-            if (text.Equals("Sintax Error"))
-                text = "";
+
         }
 
         private void btn_equals_Click(object sender, EventArgs e)
         {
-            //   goal --> 23 + (4 * (-9 * (40 + 2334))) / 8
+            //   goal --> 23 + (4 * (9 * (40 + 2334))) / 8
 
-            String text = tBox_front.Text; //(14+8) or (1444444+81423423)
+            String text = tBox_front.Text; //(1+(2+(3+(4+(5+5) or (1444444+81423423)
             if (text.Equals("Sintax Error"))
                 tBox_front.Text = "";
 
+            while (text.IndexOf("(") != -1)
+            {
+                string calculo_aux = find_pharenteses(text);
+                string calculo_resulto = solve(calculo_aux);
+                text = add_pharenteses(text);
+                text = text.Replace(calculo_aux, calculo_resulto);
+            }
 
-            //text = add_pharenteses(text);
 
-            tBox_front.Text = solve(text);
+            tBox_front.Text = text;
 
-            //text = delete_pharenteses(text);
+        }
 
-            //tBox_front.Text = solve(text);
+
+        // retorna el parentensis mas interno
+        public string find_pharenteses(string text)
+        {
+            while (text.IndexOf("(") != -1)
+            {
+                text = text.Substring(text.IndexOf("(") + 1);
+            }
+
+            text = add_pharenteses(text);
+            return text;
         }
 
         // resuleve una ecuacion simple de suma de dos numeros ( 14+8 | 1444444+81423423 )
@@ -337,7 +354,7 @@ namespace WindowsFormsApp1
                 }
             } while (false);
 
-            
+
 
             return text;
         }
@@ -369,6 +386,7 @@ namespace WindowsFormsApp1
             return index;
         }
 
+        // retorna un char con el operador
         public string char_operator(string text)
         {
             int index = index_operator(text);
