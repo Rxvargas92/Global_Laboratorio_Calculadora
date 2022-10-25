@@ -291,7 +291,9 @@ namespace WindowsFormsApp1
 
             while (text.IndexOf("(") != -1)
             {
+                text = add_pharenteses(text);
                 string calculo_aux = find_pharenteses(text);
+                text = add_pharenteses(text);
                 string calculo_resulto = solve(calculo_aux);
                 text = add_pharenteses(text);
                 text = text.Replace(calculo_aux, calculo_resulto);
@@ -310,6 +312,8 @@ namespace WindowsFormsApp1
             {
                 text = text.Substring(text.IndexOf("(") + 1);
             }
+
+            text = text.Substring(0, text.IndexOf(")"));
 
             text = add_pharenteses(text);
             return text;
