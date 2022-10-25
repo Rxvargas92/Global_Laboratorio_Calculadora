@@ -284,13 +284,18 @@ namespace WindowsFormsApp1
         private void btn_equals_Click(object sender, EventArgs e)
         {
             //   goal --> 23 + (4 * (9 * (40 + 2334))) / 8
+            //   goal --> 5(7 + 6 / (18 / 9) + 10 / 2
+
 
             String text = tBox_front.Text; //(1+(2+(3+(4+(5+5) or (1444444+81423423)
             if (text.Equals("Sintax Error"))
                 tBox_front.Text = "";
 
+
+            //text = find_operators(text);
+            text = add_pharenteses(text);
             while (text.IndexOf("(") != -1)
-            {
+            { 
                 text = add_pharenteses(text);
                 string calculo_aux = find_pharenteses(text);
                 text = add_pharenteses(text);
@@ -304,6 +309,65 @@ namespace WindowsFormsApp1
 
         }
 
+        public string find_operators(string text)
+        {
+            int count = 0;
+            // (3+4*5)
+
+            //while (text.IndexOf("+") != -1)
+            //{
+            //    text = text.Substring(text.IndexOf("+") + 1);
+            //}
+
+            if (text.IndexOf("*") != -1)
+            {
+                if (!(text.IndexOf("*")+1).Equals("("))
+                {
+                    text = text.Insert(text.IndexOf("*") + 1, "(");
+                }
+
+            }
+            if (text.IndexOf("/") != -1)
+            {
+                if (!(text.IndexOf("/") + 1).Equals("("))
+                {
+                    text = text.Insert(text.IndexOf("/") + 1, "(");
+                }
+
+            }
+            if (text.IndexOf("-") != -1)
+            {
+                if (!(text.IndexOf("-") + 1).Equals("("))
+                {
+                    text = text.Insert(text.IndexOf("-") + 1, "(");
+                }
+
+            }
+            if (text.IndexOf("+") != -1)
+            {
+                if (!(text.IndexOf("+") + 1).Equals("("))
+                {
+                    text = text.Insert(text.IndexOf("+") + 1, "(");
+                }
+
+            }
+
+            //if (count > 1)
+            //{
+            //    while (text.IndexOf("+") != -1)
+            //    {
+            //        text = text.Substring(text.IndexOf("+") + 1);
+            //    }
+            //    while (text.IndexOf("-") != -1)
+            //    {
+            //        text = text.Substring(text.IndexOf("-") + 1);
+            //    }
+            //}
+
+
+            text = add_pharenteses(text);
+            return text;
+        }
 
         // retorna el parentensis mas interno
         public string find_pharenteses(string text)
