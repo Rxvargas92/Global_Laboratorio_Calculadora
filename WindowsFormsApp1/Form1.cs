@@ -287,83 +287,52 @@ namespace WindowsFormsApp1
             //   goal --> 5(7 + 6 / (18 / 9) + 10 / 2
 
 
-            String text = tBox_front.Text; //(1+(2+(3+(4+(5+5) or (1444444+81423423)
+            String text = tBox_front.Text;
             if (text.Equals("Sintax Error"))
                 tBox_front.Text = "";
 
 
-            //text = find_operators(text);
             text = add_pharenteses(text);
             while (text.IndexOf("(") != -1)
-            { 
+            {
+                string calculo_aux = find_operators(text);
                 text = add_pharenteses(text);
-                string calculo_aux = find_pharenteses(text);
+                 //calculo_aux = find_pharenteses(text);
                 text = add_pharenteses(text);
                 string calculo_resulto = solve(calculo_aux);
                 text = add_pharenteses(text);
+                calculo_aux = delete_pharenteses(calculo_aux);
                 text = text.Replace(calculo_aux, calculo_resulto);
+                text = delete_pharenteses(text);
             }
 
-
+            text = add_pharenteses(text);
+            text = delete_pharenteses(text);
             tBox_front.Text = text;
 
         }
 
         public string find_operators(string text)
         {
-            int count = 0;
-            // (3+4*5)
 
-            //while (text.IndexOf("+") != -1)
-            //{
-            //    text = text.Substring(text.IndexOf("+") + 1);
-            //}
+            //  ( 2 + 3 - 4 * 5 / 6)
 
-            if (text.IndexOf("*") != -1)
+            if (text.IndexOf("+") < text.IndexOf("*") || text.IndexOf("+") < text.IndexOf("/"))
             {
-                if (!(text.IndexOf("*")+1).Equals("("))
-                {
-                    text = text.Insert(text.IndexOf("*") + 1, "(");
-                }
-
+                text = text.Substring(text.IndexOf("+") + 1);
             }
-            if (text.IndexOf("/") != -1)
+            if (text.IndexOf("-") < text.IndexOf("*") || text.IndexOf("-") < text.IndexOf("/"))
             {
-                if (!(text.IndexOf("/") + 1).Equals("("))
-                {
-                    text = text.Insert(text.IndexOf("/") + 1, "(");
-                }
-
+                text = text.Substring(text.IndexOf("-") + 1);
             }
-            if (text.IndexOf("-") != -1)
+            if (text.IndexOf("/") < text.IndexOf("*"))
             {
-                if (!(text.IndexOf("-") + 1).Equals("("))
-                {
-                    text = text.Insert(text.IndexOf("-") + 1, "(");
-                }
-
+                text = text.Substring(text.IndexOf("/") + 1);
             }
-            if (text.IndexOf("+") != -1)
+            if (text.IndexOf("*") < text.IndexOf("/"))
             {
-                if (!(text.IndexOf("+") + 1).Equals("("))
-                {
-                    text = text.Insert(text.IndexOf("+") + 1, "(");
-                }
-
+                text = text.Substring(text.IndexOf("*") + 1);
             }
-
-            //if (count > 1)
-            //{
-            //    while (text.IndexOf("+") != -1)
-            //    {
-            //        text = text.Substring(text.IndexOf("+") + 1);
-            //    }
-            //    while (text.IndexOf("-") != -1)
-            //    {
-            //        text = text.Substring(text.IndexOf("-") + 1);
-            //    }
-            //}
-
 
             text = add_pharenteses(text);
             return text;
@@ -388,6 +357,12 @@ namespace WindowsFormsApp1
         {
             text = add_pharenteses(text);
             text = delete_pharenteses(text);
+
+            if (Regex.IsMatch(text, pattern: @"^\d*$"))
+            {
+                return text;   
+            }
+
             int num1;
             int num2;
             string operador = char_operator(text);
@@ -397,8 +372,11 @@ namespace WindowsFormsApp1
             num2 = Convert.ToInt32(text.Substring(index + 1));
 
 
+
             do
             {
+
+                
                 if (operador.Contains("+"))
                 {
                     text = Convert.ToString(num1 + num2);
@@ -444,7 +422,7 @@ namespace WindowsFormsApp1
             string[] list = { "*", "/", "+", "-" };
             int index = 0;
 
-            for (int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length + 1; i++)
             {
                 if (index > 0)
                 { break; }
