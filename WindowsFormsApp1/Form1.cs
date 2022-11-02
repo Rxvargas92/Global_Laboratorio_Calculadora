@@ -292,7 +292,7 @@ namespace WindowsFormsApp1
             if (text.Equals(ERROR_MSG))
                 tBox_front.Text = "";
 
-            //text = text.Substring(text.IndexOf(")") + 1, 1);
+            //text = text.Substring(text.IndexOf("("), text.IndexOf(")"));
 
             text = add_pharenteses(text);
             while (text.IndexOf("(") != -1)
@@ -306,9 +306,9 @@ namespace WindowsFormsApp1
 
 
                 text = add_pharenteses(text);
-                string calculo_aux = find_operators(text);
-                text = add_pharenteses(text);
-                //calculo_aux = find_pharenteses(text);
+                string calculo_aux = find_pharenteses(text);
+                calculo_aux = add_pharenteses(calculo_aux);
+                calculo_aux = find_operators(calculo_aux); // comparar operadores
                 text = add_pharenteses(text);
                 string calculo_resulto = solve(calculo_aux);
                 text = add_pharenteses(text);
@@ -352,13 +352,121 @@ namespace WindowsFormsApp1
                 text = text.Substring(text.IndexOf("+") + 1);
             }
 
+            if(text.IndexOf("*") != -1) { text = delete_multiplication(text); }
+            if (text.IndexOf("-") != -1) { text = delete_less(text); }
+            if (text.IndexOf("/") != -1) { text = delete_div(text); }
+            if (text.IndexOf("+") != -1) { text = delete_sum(text); }
+
+            if (text.IndexOf("*") < text.IndexOf("+") || text.IndexOf("*") < text.IndexOf("-")) 
+            {
+                if (text.IndexOf("*") == -1) { return text; }
+                if (text.IndexOf("+") != -1) { text = text.Substring(0, text.IndexOf("+")); }
+                if (text.IndexOf("-") != -1) { text = text.Substring(0, text.IndexOf("-")); }
+                
+            }
+            if (text.IndexOf("/") < text.IndexOf("+") || text.IndexOf("/") < text.IndexOf("-"))
+            {
+                if (text.IndexOf("/") == -1) { return text; }
+                if (text.IndexOf("+") != -1) { text = text.Substring(0, text.IndexOf("+")); }
+                if (text.IndexOf("-") != -1) { text = text.Substring(0, text.IndexOf("-")); }
+
+            }
+
+
             text = add_pharenteses(text);
             return text;
         }
 
-        // retorna el parentensis mas interno
+        public string delete_multiplication(string text)
+        {
+            string pre = text;
+            string aux = "";
+            while (pre.IndexOf("*") != -1)
+            {
+                if (pre.IndexOf("*") != -1)
+                {
+                    aux = pre;
+                }
+                pre = pre.Substring(pre.IndexOf("*") + 1);
+            }
+            if (aux.IndexOf("*") != -1)
+            {
+                return add_pharenteses(aux);
+            }
+            return pre;
+        }
+
+        public string delete_sum(string text)
+        {
+            string pre = text;
+            string aux = "";
+            while (pre.IndexOf("+") != -1)
+            {
+                if (pre.IndexOf("+") != -1)
+                {
+                    aux = pre;
+                }
+                pre = pre.Substring(pre.IndexOf("+") + 1);
+            }
+            if (aux.IndexOf("+") != -1)
+            {
+                return add_pharenteses(aux);
+            }
+            return pre;
+        }
+
+        public string delete_less(string text)
+        {
+            string pre = text;
+            string aux = "";
+            while (pre.IndexOf("-") != -1)
+            {
+                if (pre.IndexOf("-") != -1)
+                {
+                    aux = pre;
+                }
+                pre = pre.Substring(pre.IndexOf("-") + 1);
+            }
+            if (aux.IndexOf("-") != -1)
+            {
+                return add_pharenteses(aux);
+            }
+            return pre;
+        }
+
+        public string delete_div(string text)
+        {
+            string pre = text;
+            string aux = "";
+            while (pre.IndexOf("/") != -1)
+            {
+                if (pre.IndexOf("/") != -1)
+                {
+                    aux = pre;
+                }
+                pre = pre.Substring(pre.IndexOf("/") + 1);
+            }
+            if (aux.IndexOf("/") != -1)
+            {
+                return add_pharenteses(aux);
+            }
+            return pre;
+        }
+
+        // retorna el parentensis mas interno       //!// (9)
         public string find_pharenteses(string text)
         {
+            string aux = text.Substring(text.IndexOf("("), text.IndexOf(")"));
+            if (Regex.IsMatch(aux, pattern: @"^\d*$"))
+            {
+                string number_alone = "";
+                number_alone = aux;
+                number_alone = number_alone + text.Substring(text.IndexOf(")"));
+                return number_alone;
+            }
+
+            if (text.IndexOf("(") == -1) { return text; }
+
             while (text.IndexOf("(") != -1)
             {
                 text = text.Substring(text.IndexOf("(") + 1);
@@ -379,9 +487,9 @@ namespace WindowsFormsApp1
 
             if (Regex.IsMatch(text, pattern: @"^\d*$"))
             {
-                return text;   
+                return text;
             }
-            if (text.StartsWith("+") || text.StartsWith("*") || text.StartsWith("/")) { return ERROR_MSG;}
+            if (text.StartsWith("+") || text.StartsWith("*") || text.StartsWith("/")) { return ERROR_MSG; }
 
             int num1;
             int num2;
@@ -449,7 +557,7 @@ namespace WindowsFormsApp1
 
             for (int i = 0; i < text.Length + 1; i++)
             {
-            if (index != -1)
+                if (index != -1)
                 { break; }
                 index = text.IndexOf(list[i]);
             }
@@ -461,7 +569,7 @@ namespace WindowsFormsApp1
         public string char_operator(string text)
         {
             int index = index_operator(text);
-            if(index == -2) { return ERROR_MSG; }
+            if (index == -2) { return ERROR_MSG; }
             return text.Substring(index, 1);
         }
 
