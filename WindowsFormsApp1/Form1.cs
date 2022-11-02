@@ -292,15 +292,28 @@ namespace WindowsFormsApp1
             if (text.Equals(ERROR_MSG))
                 tBox_front.Text = "";
 
-            //text = text.Substring(text.IndexOf("("), text.IndexOf(")"));
+            //text = (text.Substring(text.IndexOf(")") +1,1));
 
             text = add_pharenteses(text);
             while (text.IndexOf("(") != -1)
             {
                 text = delete_pharenteses(text);
-                if (Regex.IsMatch(text, pattern: @"^\d*$") || text.StartsWith("-") || Regex.IsMatch(text, pattern: @"^[a-zA-Z\s]"))
+                if (Regex.IsMatch(text, pattern: @"^\d*$") || Regex.IsMatch(text, pattern: @"^[a-zA-Z\s]"))
                 {
                     break;
+                }
+
+                if (Regex.IsMatch(text, pattern: @"^-\d*$") && text.StartsWith("-"))
+                {
+                    break;
+                }
+
+                if (text.Contains(")")) {
+                    if (!Regex.IsMatch(text.Substring(text.IndexOf(")") + 1, 1), pattern: @"^[*/+]*$"))
+                    {
+                        text = ERROR_MSG;
+                        break;
+                    }
                 }
                 if (text.EndsWith("-") || text.EndsWith("+") || text.EndsWith("*") || text.EndsWith("/") || text.EndsWith("(")) { text = ERROR_MSG; break; }
 
@@ -308,6 +321,7 @@ namespace WindowsFormsApp1
                 text = add_pharenteses(text);
                 string calculo_aux = find_pharenteses(text);
                 calculo_aux = add_pharenteses(calculo_aux);
+                text = calculo_aux;
                 calculo_aux = find_operators(calculo_aux); // comparar operadores
                 text = add_pharenteses(text);
                 string calculo_resulto = solve(calculo_aux);
@@ -330,11 +344,8 @@ namespace WindowsFormsApp1
             if (text.IndexOf("+") < text.IndexOf("*") || text.IndexOf("+") < text.IndexOf("/"))
             {
                 text = text.Substring(text.IndexOf("+") + 1);
-            }
-            if (text.IndexOf("-") < text.IndexOf("*") || text.IndexOf("-") < text.IndexOf("/"))
-            {
-                text = text.Substring(text.IndexOf("-") + 1);
-            }
+            } 
+
             if (text.IndexOf("/") < text.IndexOf("*"))
             {
                 text = text.Substring(text.IndexOf("/") + 1);
@@ -343,10 +354,7 @@ namespace WindowsFormsApp1
             {
                 text = text.Substring(text.IndexOf("*") + 1);
             }
-            if (text.IndexOf("-") < text.IndexOf("+"))
-            {
-                text = text.Substring(text.IndexOf("-") + 1);
-            }
+            
             if (text.IndexOf("+") < text.IndexOf("-"))
             {
                 text = text.Substring(text.IndexOf("+") + 1);
@@ -362,7 +370,16 @@ namespace WindowsFormsApp1
                 if (text.IndexOf("*") == -1) { return text; }
                 if (text.IndexOf("+") != -1) { text = text.Substring(0, text.IndexOf("+")); }
                 if (text.IndexOf("*") + 1 == text.IndexOf("-")) { return text; }
-                if (text.IndexOf("-") != -1) { text = text.Substring(0, text.IndexOf("-")); }
+                if (text.IndexOf("-") != -1) 
+                {
+                    text = add_pharenteses(text);
+                    text = delete_pharenteses(text);
+                    if (!text.StartsWith("-"))
+                    {
+                        text = text.Substring(0, text.IndexOf("-"));
+                    }
+                     
+                }
                 
             }
             if (text.IndexOf("/") < text.IndexOf("+") || text.IndexOf("/") < text.IndexOf("-"))
@@ -373,6 +390,17 @@ namespace WindowsFormsApp1
 
             }
 
+            if (text.StartsWith("-")) { return text; }
+
+            if (text.IndexOf("-") < text.IndexOf("+"))
+            {
+                text = text.Substring(text.IndexOf("-") + 1);
+            }
+
+            if (text.IndexOf("-") < text.IndexOf("*") || text.IndexOf("-") < text.IndexOf("/"))
+            {
+                text = text.Substring(text.IndexOf("-") + 1);
+            }
 
             text = add_pharenteses(text);
             return text;
@@ -457,12 +485,12 @@ namespace WindowsFormsApp1
         // retorna el parentensis mas interno       //!// (9)
         public string find_pharenteses(string text)
         {
-            string aux = text.Substring(text.IndexOf("("), text.IndexOf(")"));
+            string aux = text.Substring(text.IndexOf("(") +1, text.IndexOf(")")-1);
             if (Regex.IsMatch(aux, pattern: @"^\d*$"))
             {
                 string number_alone = "";
                 number_alone = aux;
-                number_alone = number_alone + text.Substring(text.IndexOf(")"));
+                number_alone = number_alone + text.Substring(text.IndexOf(")")+1);
                 return number_alone;
             }
 
@@ -501,7 +529,7 @@ namespace WindowsFormsApp1
             num1 = Convert.ToInt32(text.Substring(0, index));
             num2 = Convert.ToInt32(text.Substring(index + 1));
 
-
+            
 
             do
             {
@@ -547,6 +575,13 @@ namespace WindowsFormsApp1
         // retorna el index del operador que este dentro del @string ( hecho solo con + ) // (9)+7
         public int index_operator(string text)
         {
+            bool aux_less = false;
+            if (text.StartsWith("-"))
+            {
+                aux_less = true;
+                text = text.Substring(1);
+            }
+
             string[] list = { "*", "/", "+", "-" };
             int index = -1;
 
@@ -562,7 +597,10 @@ namespace WindowsFormsApp1
                 { break; }
                 index = text.IndexOf(list[i]);
             }
-
+            if (aux_less)
+            {
+                text = "-" + text;
+            }
             return index;
         }
 
