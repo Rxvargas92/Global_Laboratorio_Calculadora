@@ -183,7 +183,7 @@ namespace WindowsFormsApp1
             }
             else if (Regex.IsMatch(text.Substring(text.Length - 1), pattern: @"^[*/-]+$"))
             {
-                tBox_front.Text = text + "(-";
+                tBox_front.Text = text + "-";
 
             }
             else
@@ -361,6 +361,7 @@ namespace WindowsFormsApp1
             {
                 if (text.IndexOf("*") == -1) { return text; }
                 if (text.IndexOf("+") != -1) { text = text.Substring(0, text.IndexOf("+")); }
+                if (text.IndexOf("*") + 1 == text.IndexOf("-")) { return text; }
                 if (text.IndexOf("-") != -1) { text = text.Substring(0, text.IndexOf("-")); }
                 
             }
