@@ -284,32 +284,35 @@ namespace WindowsFormsApp1
 
         private void btn_equals_Click(object sender, EventArgs e)
         {
-            //   goal --> 23 + (4 * (9 * (40 + 2334))) / 8
+            //   goal --> 23 + (4 * (9 * (40 + 2334))) / 8 === 10706
             //   goal --> 5(7 + 6 / (18 / 9) + 10 / 2
 
+            tBox_front.Text = init(tBox_front.Text);
 
-            String text = tBox_front.Text;
+        }
+
+        public string init(string text)
+        {
             if (text.Equals(ERROR_MSG))
                 tBox_front.Text = "";
 
-            //text = (text.Substring(text.IndexOf(")") +1,1));
 
             text = add_pharenteses(text);
             while (text.IndexOf("(") != -1)
             {
                 text = delete_pharenteses(text);
+
                 if (Regex.IsMatch(text, pattern: @"^\d*$") || Regex.IsMatch(text, pattern: @"^[a-zA-Z\s]"))
                 {
                     break;
                 }
-
                 if (Regex.IsMatch(text, pattern: @"^-\d*$") && text.StartsWith("-"))
                 {
                     break;
                 }
-
-                if (text.Contains(")")) {
-                    if (!Regex.IsMatch(text.Substring(text.IndexOf(")") + 1, 1), pattern: @"^[*/+]*$"))
+                if (text.Contains(")"))
+                {
+                    if (!Regex.IsMatch(text.Substring(text.IndexOf(")") + 1, 1), pattern: @"^[-*/+]*$"))
                     {
                         text = ERROR_MSG;
                         break;
@@ -317,23 +320,75 @@ namespace WindowsFormsApp1
                 }
                 if (text.EndsWith("-") || text.EndsWith("+") || text.EndsWith("*") || text.EndsWith("/") || text.EndsWith("(")) { text = ERROR_MSG; break; }
 
-
                 text = add_pharenteses(text);
                 string calculo_aux = find_pharenteses(text);
+
+                if(calculo_aux.StartsWith("-") && Regex.IsMatch(calculo_aux, pattern: @"^[-\d]*$"))
+                {
+                    calculo_aux = delete_pharenteses(calculo_aux);
+                    text = text.Replace(add_pharenteses(calculo_aux), calculo_aux);
+                    calculo_aux = find_pharenteses(add_pharenteses(text));
+                }
+
                 calculo_aux = add_pharenteses(calculo_aux);
-                text = calculo_aux;
-                calculo_aux = find_operators(calculo_aux); // comparar operadores
-                text = add_pharenteses(text);
-                string calculo_resulto = solve(calculo_aux);
-                text = add_pharenteses(text);
                 calculo_aux = delete_pharenteses(calculo_aux);
+                if (calculo_aux.Contains(")")  && calculo_aux.IndexOf(")") < calculo_aux.IndexOf("(") || amount_pharenteses_left(calculo_aux) == 0 && calculo_aux.Contains(")"))
+                {
+                    calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf(")"), 1);
+                }
+                if ((calculo_aux.Contains("(") && calculo_aux.IndexOf("(") < calculo_aux.IndexOf(")") || amount_pharenteses_right(calculo_aux) == 0 && calculo_aux.Contains("(")))
+                {
+                    calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf("("), 1);
+                }
+
+                string pre_calculo = calculo_aux;
+
+                calculo_aux = add_pharenteses(calculo_aux);
+
+                calculo_aux = find_operators(calculo_aux); // comparar operadores
+
+                string calculo_resulto = solve(calculo_aux);
+
+
+                if (amount_operators(pre_calculo) > 1) { calculo_aux = delete_pharenteses(calculo_aux); }
+
+
                 text = text.Replace(calculo_aux, calculo_resulto);
+
+                text = delete_pharenteses(text);
+                if (text.Contains(")") && text.IndexOf(")") < text.IndexOf("(") || amount_pharenteses_left(text) == 0 && text.Contains(")"))
+                {
+                    text = text.Remove(text.IndexOf(")"), 1);
+                }
+                if (text.Contains("(") && text.IndexOf("(") < text.IndexOf(")") || amount_pharenteses_right(text) == 0 && text.Contains("("))
+                {
+                    text = text.Remove(text.IndexOf("("), 1);
+                }
+
+                text = add_pharenteses(text);
+                
+                if(amount_pharenteses_left(calculo_aux) == 1 && amount_pharenteses_right(calculo_aux) == 1) {
+                    calculo_aux = delete_pharenteses(calculo_aux);
+                }
+
+                text = text.Replace(calculo_aux, calculo_resulto);
+
             }
 
             text = add_pharenteses(text);
             text = delete_pharenteses(text);
-            tBox_front.Text = text;
+            return text;
+        }
+        public int amount_operators(string text)
+        {
+            int amount = 0;
 
+            if (text.IndexOf("-") != -1) { amount++; }
+            if (text.IndexOf("+") != -1) { amount++; }
+            if (text.IndexOf("*") != -1) { amount++; }
+            if (text.IndexOf("/") != -1) { amount++; }
+
+            return amount;
         }
 
         public string find_operators(string text)
@@ -344,7 +399,7 @@ namespace WindowsFormsApp1
             if (text.IndexOf("+") < text.IndexOf("*") || text.IndexOf("+") < text.IndexOf("/"))
             {
                 text = text.Substring(text.IndexOf("+") + 1);
-            } 
+            }
 
             if (text.IndexOf("/") < text.IndexOf("*"))
             {
@@ -354,23 +409,23 @@ namespace WindowsFormsApp1
             {
                 text = text.Substring(text.IndexOf("*") + 1);
             }
-            
+
             if (text.IndexOf("+") < text.IndexOf("-"))
             {
                 text = text.Substring(text.IndexOf("+") + 1);
             }
 
-            if(text.IndexOf("*") != -1) { text = delete_multiplication(text); }
+            if (text.IndexOf("*") != -1) { text = delete_multiplication(text); }
             if (text.IndexOf("-") != -1) { text = delete_less(text); }
             if (text.IndexOf("/") != -1) { text = delete_div(text); }
             if (text.IndexOf("+") != -1) { text = delete_sum(text); }
 
-            if (text.IndexOf("*") < text.IndexOf("+") || text.IndexOf("*") < text.IndexOf("-")) 
+            if (text.IndexOf("*") < text.IndexOf("+") || text.IndexOf("*") < text.IndexOf("-"))
             {
                 if (text.IndexOf("*") == -1) { return text; }
                 if (text.IndexOf("+") != -1) { text = text.Substring(0, text.IndexOf("+")); }
                 if (text.IndexOf("*") + 1 == text.IndexOf("-")) { return text; }
-                if (text.IndexOf("-") != -1) 
+                if (text.IndexOf("-") != -1)
                 {
                     text = add_pharenteses(text);
                     text = delete_pharenteses(text);
@@ -378,9 +433,9 @@ namespace WindowsFormsApp1
                     {
                         text = text.Substring(0, text.IndexOf("-"));
                     }
-                     
+
                 }
-                
+
             }
             if (text.IndexOf("/") < text.IndexOf("+") || text.IndexOf("/") < text.IndexOf("-"))
             {
@@ -485,15 +540,15 @@ namespace WindowsFormsApp1
         // retorna el parentensis mas interno       //!// (9)
         public string find_pharenteses(string text)
         {
-            string aux = text.Substring(text.IndexOf("(") +1, text.IndexOf(")")-1);
+            string aux = text.Substring(text.IndexOf("(") + 1, text.IndexOf(")") - 1);
+
             if (Regex.IsMatch(aux, pattern: @"^\d*$"))
             {
                 string number_alone = "";
                 number_alone = aux;
-                number_alone = number_alone + text.Substring(text.IndexOf(")")+1);
+                number_alone = number_alone + text.Substring(text.IndexOf(")") + 1);
                 return number_alone;
             }
-
             if (text.IndexOf("(") == -1) { return text; }
 
             while (text.IndexOf("(") != -1)
@@ -503,9 +558,31 @@ namespace WindowsFormsApp1
 
             text = text.Substring(0, text.IndexOf(")"));
 
-            text = add_pharenteses(text);
             return text;
         }
+
+        public int amount_pharenteses_left(string text)
+        {
+            int amount = 0;
+            while (text.IndexOf("(") != -1)
+            {
+                text = text.Substring(text.IndexOf("(") + 1);
+                amount++;
+            }
+            return amount;
+        }
+
+        public int amount_pharenteses_right(string text)
+        {
+            int amount = 0;
+            while (text.IndexOf(")") != -1)
+            {
+                text = text.Substring(text.IndexOf(")") + 1);
+                amount++;
+            }
+            return amount;
+        }
+
 
         // resuleve una ecuacion simple de suma de dos numeros ( 14+8 | 1444444+81423423 )
         public string solve(string text)
@@ -520,6 +597,16 @@ namespace WindowsFormsApp1
             }
             if (text.StartsWith("+") || text.StartsWith("*") || text.StartsWith("/")) { return ERROR_MSG; }
 
+            if (amount_pharenteses_left(text) == 0 && text.Contains(")"))
+            {
+                text = text.Remove(text.IndexOf(")"), 1);
+            }
+
+            if (amount_pharenteses_right(text) == 0 && text.Contains("("))
+            {
+                text = text.Remove(text.IndexOf("("), 1);
+            }
+
             int num1;
             int num2;
             string operador = char_operator(text);
@@ -527,9 +614,10 @@ namespace WindowsFormsApp1
             int index = index_operator(text);
 
             num1 = Convert.ToInt32(text.Substring(0, index));
+
             num2 = Convert.ToInt32(text.Substring(index + 1));
 
-            
+
 
             do
             {
