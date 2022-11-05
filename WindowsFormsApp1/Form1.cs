@@ -293,91 +293,100 @@ namespace WindowsFormsApp1
 
         public string init(string text)
         {
-            if (text.Equals(ERROR_MSG))
-                tBox_front.Text = "";
-
-
-            text = add_pharenteses(text);
-            while (text.IndexOf("(") != -1)
+            try
             {
-                text = delete_pharenteses(text);
 
-                if (Regex.IsMatch(text, pattern: @"^\d*$") || Regex.IsMatch(text, pattern: @"^[a-zA-Z\s]"))
+                if (text.Equals(ERROR_MSG))
+                    tBox_front.Text = "";
+
+
+                text = add_pharenteses(text);
+                while (text.IndexOf("(") != -1)
                 {
-                    break;
-                }
-                if (Regex.IsMatch(text, pattern: @"^-\d*$") && text.StartsWith("-"))
-                {
-                    break;
-                }
-                if (text.Contains(")"))
-                {
-                    if (!Regex.IsMatch(text.Substring(text.IndexOf(")") + 1, 1), pattern: @"^[-*/+]*$"))
+                    text = delete_pharenteses(text);
+
+                    if (Regex.IsMatch(text, pattern: @"^\d*$") || Regex.IsMatch(text, pattern: @"^[a-zA-Z\s]"))
                     {
-                        text = ERROR_MSG;
                         break;
                     }
+                    if (Regex.IsMatch(text, pattern: @"^-\d*$") && text.StartsWith("-"))
+                    {
+                        break;
+                    }
+                    if (text.Contains(")"))
+                    {
+                        if (!Regex.IsMatch(text.Substring(text.IndexOf(")") + 1, 1), pattern: @"^[-*/+]*$"))
+                        {
+                            text = ERROR_MSG;
+                            break;
+                        }
+                    }
+                    if (text.EndsWith("-") || text.EndsWith("+") || text.EndsWith("*") || text.EndsWith("/") || text.EndsWith("(")) { text = ERROR_MSG; break; }
+
+                    text = add_pharenteses(text);
+                    string calculo_aux = find_pharenteses(text);
+
+                    if (calculo_aux.StartsWith("-") && Regex.IsMatch(calculo_aux, pattern: @"^[-\d]*$"))
+                    {
+                        calculo_aux = delete_pharenteses(calculo_aux);
+                        text = text.Replace(add_pharenteses(calculo_aux), calculo_aux);
+                        calculo_aux = find_pharenteses(add_pharenteses(text));
+                    }
+
+                    calculo_aux = add_pharenteses(calculo_aux);
+                    calculo_aux = delete_pharenteses(calculo_aux);
+                    if (calculo_aux.Contains(")") && calculo_aux.IndexOf(")") < calculo_aux.IndexOf("(") || amount_pharenteses_left(calculo_aux) == 0 && calculo_aux.Contains(")"))
+                    {
+                        calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf(")"), 1);
+                    }
+                    if ((calculo_aux.Contains("(") && calculo_aux.IndexOf("(") < calculo_aux.IndexOf(")") || amount_pharenteses_right(calculo_aux) == 0 && calculo_aux.Contains("(")))
+                    {
+                        calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf("("), 1);
+                    }
+
+                    string pre_calculo = calculo_aux;
+
+                    calculo_aux = add_pharenteses(calculo_aux);
+
+                    calculo_aux = find_operators(calculo_aux); // comparar operadores
+
+                    string calculo_resulto = solve(calculo_aux);
+
+
+                    if (amount_operators(pre_calculo) > 1) { calculo_aux = delete_pharenteses(calculo_aux); }
+
+
+                    text = text.Replace(calculo_aux, calculo_resulto);
+
+                    text = delete_pharenteses(text);
+                    if (text.Contains(")") && text.IndexOf(")") < text.IndexOf("(") || amount_pharenteses_left(text) == 0 && text.Contains(")"))
+                    {
+                        text = text.Remove(text.IndexOf(")"), 1);
+                    }
+                    if (text.Contains("(") && text.IndexOf("(") < text.IndexOf(")") || amount_pharenteses_right(text) == 0 && text.Contains("("))
+                    {
+                        text = text.Remove(text.IndexOf("("), 1);
+                    }
+
+                    text = add_pharenteses(text);
+
+                    if (amount_pharenteses_left(calculo_aux) == 1 && amount_pharenteses_right(calculo_aux) == 1)
+                    {
+                        calculo_aux = delete_pharenteses(calculo_aux);
+                    }
+
+                    text = text.Replace(calculo_aux, calculo_resulto);
+
                 }
-                if (text.EndsWith("-") || text.EndsWith("+") || text.EndsWith("*") || text.EndsWith("/") || text.EndsWith("(")) { text = ERROR_MSG; break; }
 
                 text = add_pharenteses(text);
-                string calculo_aux = find_pharenteses(text);
-
-                if(calculo_aux.StartsWith("-") && Regex.IsMatch(calculo_aux, pattern: @"^[-\d]*$"))
-                {
-                    calculo_aux = delete_pharenteses(calculo_aux);
-                    text = text.Replace(add_pharenteses(calculo_aux), calculo_aux);
-                    calculo_aux = find_pharenteses(add_pharenteses(text));
-                }
-
-                calculo_aux = add_pharenteses(calculo_aux);
-                calculo_aux = delete_pharenteses(calculo_aux);
-                if (calculo_aux.Contains(")")  && calculo_aux.IndexOf(")") < calculo_aux.IndexOf("(") || amount_pharenteses_left(calculo_aux) == 0 && calculo_aux.Contains(")"))
-                {
-                    calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf(")"), 1);
-                }
-                if ((calculo_aux.Contains("(") && calculo_aux.IndexOf("(") < calculo_aux.IndexOf(")") || amount_pharenteses_right(calculo_aux) == 0 && calculo_aux.Contains("(")))
-                {
-                    calculo_aux = calculo_aux.Remove(calculo_aux.IndexOf("("), 1);
-                }
-
-                string pre_calculo = calculo_aux;
-
-                calculo_aux = add_pharenteses(calculo_aux);
-
-                calculo_aux = find_operators(calculo_aux); // comparar operadores
-
-                string calculo_resulto = solve(calculo_aux);
-
-
-                if (amount_operators(pre_calculo) > 1) { calculo_aux = delete_pharenteses(calculo_aux); }
-
-
-                text = text.Replace(calculo_aux, calculo_resulto);
-
                 text = delete_pharenteses(text);
-                if (text.Contains(")") && text.IndexOf(")") < text.IndexOf("(") || amount_pharenteses_left(text) == 0 && text.Contains(")"))
-                {
-                    text = text.Remove(text.IndexOf(")"), 1);
-                }
-                if (text.Contains("(") && text.IndexOf("(") < text.IndexOf(")") || amount_pharenteses_right(text) == 0 && text.Contains("("))
-                {
-                    text = text.Remove(text.IndexOf("("), 1);
-                }
-
-                text = add_pharenteses(text);
-                
-                if(amount_pharenteses_left(calculo_aux) == 1 && amount_pharenteses_right(calculo_aux) == 1) {
-                    calculo_aux = delete_pharenteses(calculo_aux);
-                }
-
-                text = text.Replace(calculo_aux, calculo_resulto);
-
+                return text;
             }
-
-            text = add_pharenteses(text);
-            text = delete_pharenteses(text);
-            return text;
+            catch (Exception e)
+            {
+                return "coming soon";
+            }
         }
         public int amount_operators(string text)
         {
@@ -689,7 +698,7 @@ namespace WindowsFormsApp1
             {
                 text = "-" + text;
             }
-            return index;
+            return index + 1;
         }
 
         // retorna un char con el operador
