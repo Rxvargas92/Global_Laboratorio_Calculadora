@@ -697,8 +697,9 @@ namespace WindowsFormsApp1
             if (aux_less)
             {
                 text = "-" + text;
+                return index + 1;
             }
-            return index + 1;
+            return index;
         }
 
         // retorna un char con el operador
