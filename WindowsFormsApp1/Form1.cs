@@ -323,6 +323,16 @@ namespace WindowsFormsApp1
                     }
                     if (text.EndsWith("-") || text.EndsWith("+") || text.EndsWith("*") || text.EndsWith("/") || text.EndsWith("(")) { text = ERROR_MSG; break; }
 
+
+
+                    if (text.Contains("("))
+                    {
+                        if (text.Substring(text.IndexOf("(") - 1,1) != "*")
+                        {
+                            text = text.Insert(text.IndexOf("("), "*");
+                        }
+                    }
+
                     text = add_pharenteses(text);
                     string calculo_aux = find_pharenteses(text);
 
